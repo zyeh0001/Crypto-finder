@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import baseTheme from './styles/theme';
 import CssBaseline from '@mui/material/CssBaseline';
+import { CryptoProvider } from './context/crypto/CryptoContext';
 
 function App() {
   const useStyle = makeStyles(() => ({
@@ -22,15 +23,17 @@ function App() {
   return (
     <ThemeProvider theme={baseTheme}>
       <CssBaseline />
-      <div className={classes.App}>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path='/' exact element={<Home />} />
-            <Route path='/coins/:id' element={<CoinDetail />} />
-          </Routes>
-        </Router>
-      </div>
+      <CryptoProvider>
+        <div className={classes.App}>
+          <Router>
+            <Header />
+            <Routes>
+              <Route path='/' exact element={<Home />} />
+              <Route path='/coins/:id' element={<CoinDetail />} />
+            </Routes>
+          </Router>
+        </div>
+      </CryptoProvider>
     </ThemeProvider>
   );
 }

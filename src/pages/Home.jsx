@@ -1,7 +1,12 @@
 import React from 'react';
+import CryptoTable from '../components/CryptoTable';
 
 function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <CryptoTable />
+    </div>
+  );
 }
 
 export default Home;

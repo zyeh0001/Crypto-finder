@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   AppBar,
   Container,
@@ -15,18 +15,27 @@ import {
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import { useNavigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
+import CryptoContext from '../context/crypto/CryptoContext';
 
 function Header() {
-  const [dollarType, setDollarType] = useState('');
+  const [dollarType, setDollarType] = useState('AUD');
+
+  const { currency, dispatch } = useContext(CryptoContext);
 
   const handleChange = (e) => {
     setDollarType(e.target.value);
+    // dispatch({ type: 'SET_CURRENCY', payload: e.target.value });
   };
+
+  useEffect(() => {
+    dispatch({ type: 'SET_CURRENCY', payload: dollarType });
+    // console.log(currency);
+  }, [dollarType, dispatch, currency]);
 
   const darkTheme = createTheme({
     palette: {
       primary: {
-        main: '#ECB800',
+        main: '#03FEEF',
       },
       text: {
         primary: '#fff',
@@ -72,6 +81,7 @@ function Header() {
                   >
                     <MenuItem value={'AUD'}>AUD</MenuItem>
                     <MenuItem value={'USD'}>USD</MenuItem>
+                    <MenuItem value={'TWD'}>TWD</MenuItem>
                   </Select>
                 </FormControl>
               </Box>

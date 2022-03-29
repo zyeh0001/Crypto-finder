@@ -1,19 +1,20 @@
 import { createTheme } from '@mui/material';
 
 const baseTheme = createTheme({
-  //   typography: {
-  //     allVariants: {
-  //       fontFamily: 'Roboto, sans-serif',
-  //     },
-  //   },
   palette: {
     primary: {
-      main: '#ECB800',
+      main: '#03FEEF',
     },
     secondary: {
-      main: '#FFC700',
+      main: '#03FEEF',
     },
+    text: {
+      primary: '#fff',
+      secondary: '#03FEEF',
+    },
+    mode: 'dark',
   },
+
   shape: {
     borderRadius: 4,
   },
