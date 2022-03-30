@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CryptoContext from '../context/crypto/CryptoContext';
 import { fetchSingleCrypto } from '../context/crypto/CryptoActions';
@@ -19,7 +19,7 @@ import {
   Stack,
 } from '@mui/material';
 
-function CoinDetail({}) {
+function CoinDetail() {
   const { id } = useParams();
   const { crypto, isLoading, dispatch, currency } = useContext(CryptoContext);
   const navigate = useNavigate();
@@ -27,8 +27,6 @@ function CoinDetail({}) {
   const getSingleCrypto = async () => {
     const coin = await fetchSingleCrypto(id);
     dispatch({ type: 'GET_CRYPTO_DETAIL', payload: coin });
-    // setCoin(coin);
-    // console.log(coin);
     return coin;
   };
   useEffect(() => {
@@ -36,6 +34,16 @@ function CoinDetail({}) {
     getSingleCrypto();
     //eslint-disable-next-line
   }, [currency]);
+
+  //Refresh crypto data every 5 second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getSingleCrypto(currency);
+    }, 5000);
+
+    return () => clearInterval(interval);
+    //eslint-disable-next-line
+  }, [currency, crypto]);
 
   if (isLoading) return <Spinner />;
 
@@ -96,7 +104,6 @@ function CoinDetail({}) {
             <Box sx={{ mx: { xs: 'auto', md: '0' } }}>
               <Grid
                 container
-                // spacing={1}
                 sx={{
                   width: 350,
                   textAlign: 'center',
@@ -144,7 +151,7 @@ function CoinDetail({}) {
                   <Typography
                     sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: 18 }}
                   >
-                    24H Low:
+                    24H High:
                   </Typography>
                   <Divider
                     color='#03FEEF'
@@ -175,7 +182,7 @@ function CoinDetail({}) {
                   <Typography
                     sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: 18 }}
                   >
-                    24H High:
+                    24H Low:
                   </Typography>
                   <Divider
                     color='#03FEEF'
@@ -193,6 +200,35 @@ function CoinDetail({}) {
                     {currencyFormatter(
                       currency,
                       crypto.market_data?.low_24h[currency.toLowerCase()]
+                    )}
+                  </Typography>
+                  <Divider
+                    color='#03FEEF'
+                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography
+                    sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: 18 }}
+                  >
+                    Total Volume:
+                  </Typography>
+                  <Divider
+                    color='#03FEEF'
+                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                  />
+                </Grid>
+                <Grid item xs={8}>
+                  <Typography
+                    sx={{
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                      fontSize: 18,
+                    }}
+                  >
+                    {currencyFormatter(
+                      currency,
+                      crypto.market_data?.total_volume[currency.toLowerCase()]
                     )}
                   </Typography>
                   <Divider

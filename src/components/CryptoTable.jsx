@@ -176,7 +176,7 @@ function CryptoTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - cryptos.length) : 0;
 
   return (
-    <Container sx={{ textAlign: 'center' }}>
+    <Container sx={{ textAlign: 'center', pb: 10 }}>
       <Typography variant='h3' sx={{ mb: 5, mt: 10, fontWeight: 'bold' }}>
         Cryptocurrency Price by Market Cap
       </Typography>

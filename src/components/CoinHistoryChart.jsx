@@ -7,29 +7,11 @@ import {
   ToggleButton,
   Divider,
 } from '@mui/material';
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from 'chart.js';
-import Chart from 'chart.js/auto';
 import { Line, Bar } from 'react-chartjs-2';
 import { Box } from '@mui/system';
+import { Chart, registerables } from 'chart.js';
 
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// );
+Chart.register(...registerables);
 
 function CoinHistoryChart({ coin }) {
   const { currency, details, dispatch } = useContext(CryptoContext);
@@ -38,7 +20,6 @@ function CoinHistoryChart({ coin }) {
   const getCryptoGraph = async () => {
     const graph = await fetchCryptoGraph(coin?.id, days, currency);
     dispatch({ type: 'GET_GRAPH_DETAIL', payload: graph });
-    console.log(graph);
     return graph;
   };
 
@@ -68,6 +49,16 @@ function CoinHistoryChart({ coin }) {
   };
 
   const getBarData = () => {
+    //change bar chart color according to trend
+    const changeBackground = ['#039D00'];
+    for (let i = 1; i < details.total_volumes?.length; i++) {
+      if (details.total_volumes[i][1] > details.total_volumes[i - 1][1]) {
+        changeBackground.push('#BE0000');
+      } else {
+        changeBackground.push('#039D00');
+      }
+    }
+
     const labels = details.total_volumes?.map((coin) => {
       let date = new Date(coin[0]);
       let time =
@@ -80,8 +71,8 @@ function CoinHistoryChart({ coin }) {
     const datasets = [
       {
         data: details.total_volumes?.map((coin) => coin[1]),
-        label: `Price ( Past ${days} Days ) in ${currency}`,
-        backgroundColor: '#FFCA0C',
+        label: `Volume ( Past ${days} Days ) in ${currency}`,
+        backgroundColor: changeBackground,
       },
     ];
     return { labels, datasets };
@@ -89,12 +80,7 @@ function CoinHistoryChart({ coin }) {
 
   const handleChange = (e, newAlignment) => {
     setAlignment(newAlignment);
-
     setDays(e.target.value);
-
-    // const currentTime = new Date().getTime();
-    // const hourLater = currentTime + 3600;
-    // console.log(currentTime, hourLater);
   };
 
   return (
