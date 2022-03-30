@@ -2,8 +2,6 @@ import {
   Container,
   Typography,
   Divider,
-  createTheme,
-  ThemeProvider,
   TextField,
   TableContainer,
   LinearProgress,
@@ -19,7 +17,6 @@ import {
 import React, { useContext, useEffect, useState } from 'react';
 import { fetchCryptos } from '../context/crypto/CryptoActions';
 import CryptoContext from '../context/crypto/CryptoContext';
-import CssBaseline from '@mui/material/CssBaseline';
 import { useNavigate } from 'react-router-dom';
 import { currencyFormatter } from '../styles/util';
 
@@ -116,10 +113,10 @@ function CryptoTable() {
   const [searchText, setSearchText] = useState('');
 
   //Handle sorting and paging
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('current_price');
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('market_cap_rank');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const navigate = useNavigate();
 

@@ -2,14 +2,16 @@ const cryptoReducer = (state, action) => {
   switch (action.type) {
     case 'GET_CRYPTOS':
       return { ...state, cryptos: action.payload, isLoading: false };
-    // case 'GET_USER': //get single user
-    //   return { ...state, user: action.payload, isLoading: false };
-    // case 'GET_REPOS': //get single user repo
-    //   return { ...state, isLoading: false, repos: action.payload };
     case 'GET_CRYPTO_DETAIL':
       return {
         ...state,
-        details: action.payload.repos,
+        crypto: action.payload,
+        isLoading: false,
+      };
+    case 'GET_GRAPH_DETAIL':
+      return {
+        ...state,
+        details: action.payload,
         isLoading: false,
       };
     case 'SET_LOADING':

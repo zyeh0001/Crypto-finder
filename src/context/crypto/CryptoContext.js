@@ -8,7 +8,7 @@ export const CryptoProvider = ({ children }) => {
     currency: 'AUD',
     cryptos: [],
     crypto: {},
-    details: [],
+    details: {},
     isLoading: false,
   };
 
