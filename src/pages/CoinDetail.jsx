@@ -26,11 +26,13 @@ import {
 function CoinDetail() {
   const { id } = useParams();
   const { crypto, isLoading, dispatch, currency } = useContext(CryptoContext);
+
   const navigate = useNavigate();
 
   const getSingleCrypto = async () => {
     const coin = await fetchSingleCrypto(id);
     dispatch({ type: 'GET_CRYPTO_DETAIL', payload: coin });
+    console.log(coin);
     return coin;
   };
 
@@ -56,7 +58,13 @@ function CoinDetail() {
     <>
       <Button
         variant='outlined'
-        sx={{ mt: 5, ml: 5, fontWeight: 'bold', fontSize: 18 }}
+        sx={{
+          mt: 5,
+          ml: 5,
+          fontWeight: 'bold',
+          fontSize: 18,
+          mb: { xs: 3, md: 2 },
+        }}
         onClick={() => navigate(-1)}
       >
         <ArrowBackIosIcon /> Back
@@ -106,23 +114,31 @@ function CoinDetail() {
                 )}
               </Typography>
             </Box>
-            <Box sx={{ mx: { xs: 'auto', md: '0' } }}>
+
+            <Box sx={{ mx: { xs: 'auto', md: 0 }, mt: { xs: 5, md: 0 } }}>
               <Grid
                 container
                 sx={{
                   width: 350,
-                  textAlign: 'center',
                 }}
               >
                 <Grid item xs={4}>
                   <Typography
-                    sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: 18 }}
+                    sx={{
+                      textAlign: 'left',
+                      fontWeight: 'bold',
+                      fontSize: { xs: 16, md: 18 },
+                    }}
                   >
                     24H Change:
                   </Typography>
                   <Divider
                     color='#03FEEF'
-                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                    sx={{
+                      borderBottomWidth: 1,
+                      my: 0.5,
+                      visibility: { xs: 'hidden', md: 'visible' },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={8}>
@@ -134,9 +150,9 @@ function CoinDetail() {
                         ] > 0
                           ? 'green'
                           : 'red',
-                      textAlign: 'center',
+                      textAlign: { xs: 'left', md: 'center' },
                       fontWeight: 'bold',
-                      fontSize: 18,
+                      fontSize: { xs: 16, md: 18 },
                     }}
                   >
                     {currencyFormatter(
@@ -148,28 +164,40 @@ function CoinDetail() {
                   </Typography>
                   <Divider
                     color='#03FEEF'
-                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                    sx={{
+                      borderBottomWidth: 1,
+                      my: 0.5,
+                      visibility: { xs: 'hidden', md: 'visible' },
+                    }}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <Typography
-                    sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: 18 }}
+                    sx={{
+                      textAlign: 'left',
+                      fontWeight: 'bold',
+                      fontSize: { xs: 16, md: 18 },
+                    }}
                   >
                     24H High:
                   </Typography>
                   <Divider
                     color='#03FEEF'
-                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                    sx={{
+                      borderBottomWidth: 1,
+                      my: 0.5,
+                      visibility: { xs: 'hidden', md: 'visible' },
+                    }}
                   />
                 </Grid>
 
                 <Grid item xs={8}>
                   <Typography
                     sx={{
-                      textAlign: 'center',
+                      textAlign: { xs: 'left', md: 'center' },
                       fontWeight: 'bold',
-                      fontSize: 18,
+                      fontSize: { xs: 16, md: 18 },
                     }}
                   >
                     {currencyFormatter(
@@ -179,27 +207,39 @@ function CoinDetail() {
                   </Typography>
                   <Divider
                     color='#03FEEF'
-                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                    sx={{
+                      borderBottomWidth: 1,
+                      my: 0.5,
+                      visibility: { xs: 'hidden', md: 'visible' },
+                    }}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <Typography
-                    sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: 18 }}
+                    sx={{
+                      textAlign: 'left',
+                      fontWeight: 'bold',
+                      fontSize: { xs: 16, md: 18 },
+                    }}
                   >
                     24H Low:
                   </Typography>
                   <Divider
                     color='#03FEEF'
-                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                    sx={{
+                      borderBottomWidth: 1,
+                      my: 0.5,
+                      visibility: { xs: 'hidden', md: 'visible' },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={8}>
                   <Typography
                     sx={{
-                      textAlign: 'center',
+                      textAlign: { xs: 'left', md: 'center' },
                       fontWeight: 'bold',
-                      fontSize: 18,
+                      fontSize: { xs: 16, md: 18 },
                     }}
                   >
                     {currencyFormatter(
@@ -209,26 +249,38 @@ function CoinDetail() {
                   </Typography>
                   <Divider
                     color='#03FEEF'
-                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                    sx={{
+                      borderBottomWidth: 1,
+                      my: 0.5,
+                      visibility: { xs: 'hidden', md: 'visible' },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={4}>
                   <Typography
-                    sx={{ textAlign: 'left', fontWeight: 'bold', fontSize: 18 }}
+                    sx={{
+                      textAlign: 'left',
+                      fontWeight: 'bold',
+                      fontSize: { xs: 16, md: 18 },
+                    }}
                   >
                     Total Volume:
                   </Typography>
                   <Divider
                     color='#03FEEF'
-                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                    sx={{
+                      borderBottomWidth: 1,
+                      my: 0.5,
+                      visibility: { xs: 'hidden', md: 'visible' },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={8}>
                   <Typography
                     sx={{
-                      textAlign: 'center',
+                      textAlign: { xs: 'left', md: 'center' },
                       fontWeight: 'bold',
-                      fontSize: 18,
+                      fontSize: { xs: 16, md: 18 },
                     }}
                   >
                     {currencyFormatter(
@@ -238,7 +290,11 @@ function CoinDetail() {
                   </Typography>
                   <Divider
                     color='#03FEEF'
-                    sx={{ borderBottomWidth: 1, my: 0.5 }}
+                    sx={{
+                      borderBottomWidth: 1,
+                      my: 0.5,
+                      visibility: { xs: 'hidden', md: 'visible' },
+                    }}
                   />
                 </Grid>
               </Grid>

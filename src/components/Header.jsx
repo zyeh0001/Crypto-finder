@@ -1,4 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
+import CryptoContext from '../context/crypto/CryptoContext';
+import { useNavigate } from 'react-router-dom';
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import {
   AppBar,
   Container,
@@ -10,25 +13,20 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
-import { useNavigate } from 'react-router-dom';
-import CryptoContext from '../context/crypto/CryptoContext';
 
 function Header() {
   const [dollarType, setDollarType] = useState('AUD');
-
   const { currency, dispatch } = useContext(CryptoContext);
-
-  const handleChange = (e) => {
-    setDollarType(e.target.value);
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch({ type: 'SET_CURRENCY', payload: dollarType });
     // console.log(currency);
   }, [dollarType, dispatch, currency]);
 
-  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setDollarType(e.target.value);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>

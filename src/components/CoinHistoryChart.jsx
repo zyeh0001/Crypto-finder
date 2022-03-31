@@ -1,23 +1,25 @@
 import React, { useState, useContext, useEffect } from 'react';
 import CryptoContext from '../context/crypto/CryptoContext';
 import { fetchCryptoGraph } from '../context/crypto/CryptoActions';
+import { Line, Bar } from 'react-chartjs-2';
+import { Chart, registerables } from 'chart.js';
 import {
   CircularProgress,
   ToggleButtonGroup,
   ToggleButton,
   Divider,
+  Box,
 } from '@mui/material';
-import { Line, Bar } from 'react-chartjs-2';
-import { Box } from '@mui/system';
-import { Chart, registerables } from 'chart.js';
-
 Chart.register(...registerables);
 
 function CoinHistoryChart({ coin }) {
   const { currency, details, dispatch } = useContext(CryptoContext);
+
+  //State handle days filter with toggle button
   const [days, setDays] = useState(1);
   const [alignment, setAlignment] = useState(1);
 
+  //get graph data through api
   const getCryptoGraph = async () => {
     const graph = await fetchCryptoGraph(coin?.id, days, currency);
     dispatch({ type: 'GET_GRAPH_DETAIL', payload: graph });
@@ -29,7 +31,9 @@ function CoinHistoryChart({ coin }) {
     //eslint-disable-next-line
   }, [currency, days]);
 
+  //prepare data for Line graph
   const getGraphData = () => {
+    //prepare x-axis labels
     const labels = details.prices?.map((coin) => {
       let date = new Date(coin[0]);
       let time =
@@ -39,6 +43,7 @@ function CoinHistoryChart({ coin }) {
       return days === 1 ? time : date.toLocaleDateString();
     });
 
+    //prepare data
     const datasets = [
       {
         data: details.prices?.map((coin) => coin[1]),
@@ -49,6 +54,7 @@ function CoinHistoryChart({ coin }) {
     return { labels, datasets };
   };
 
+  //prepare bar chart data
   const getBarData = () => {
     //change bar chart color according to trend
     const changeBackground = ['#039D00'];
@@ -77,6 +83,20 @@ function CoinHistoryChart({ coin }) {
       },
     ];
     return { labels, datasets };
+  };
+
+  //prepare lowest and highest price to be shown on Line graph
+  const getHighestLowest = () => {
+    const data = details.prices?.map((coin) => coin[1]);
+    const maxVal = Math.max(...data).toFixed(2);
+    // setHighestPoint(maxVal);
+    const minVal = Math.min(...data).toFixed(2);
+
+    return [
+      `Price Historical Line:`,
+      '',
+      `Highest: ${maxVal} | Lowest: ${minVal}`,
+    ];
   };
 
   const handleChange = (e, newAlignment) => {
@@ -127,7 +147,10 @@ function CoinHistoryChart({ coin }) {
                 },
                 title: {
                   display: true,
-                  text: 'Price Historical Line',
+                  text: getHighestLowest(),
+                  color: 'white',
+                  font: { size: 20 },
+                  padding: { bottom: 20 },
                 },
               },
             }}
@@ -151,6 +174,7 @@ function CoinHistoryChart({ coin }) {
             data={getBarData()}
             options={{
               responsive: true,
+              borderRadius: 5,
               plugins: {
                 legend: {
                   position: 'top',
@@ -158,6 +182,8 @@ function CoinHistoryChart({ coin }) {
                 title: {
                   display: true,
                   text: 'Total volume',
+                  color: 'white',
+                  font: { size: 20 },
                 },
               },
             }}

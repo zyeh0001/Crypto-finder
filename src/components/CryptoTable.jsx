@@ -1,3 +1,8 @@
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import CryptoContext from '../context/crypto/CryptoContext';
+import { fetchCryptos } from '../context/crypto/CryptoActions';
+import { currencyFormatter } from '../utils/currencyFormatter';
 import {
   Container,
   Typography,
@@ -14,12 +19,8 @@ import {
   TableBody,
   TablePagination,
 } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
-import { fetchCryptos } from '../context/crypto/CryptoActions';
-import CryptoContext from '../context/crypto/CryptoContext';
-import { useNavigate } from 'react-router-dom';
-import { currencyFormatter } from '../utils/currencyFormatter';
 
+//head cell to show table header
 const headCells = [
   {
     id: 'market_cap_rank',
@@ -124,7 +125,6 @@ function CryptoTable() {
   const getCryptos = async (currency) => {
     const cryptos = await fetchCryptos(currency);
     dispatch({ type: 'GET_CRYPTOS', payload: cryptos });
-    // console.log(cryptos);
     return cryptos;
   };
 
@@ -192,7 +192,6 @@ function CryptoTable() {
         sx={{ width: '100%' }}
         onChange={(e) => setSearchText(e.target.value)}
       ></TextField>
-
       <TableContainer>
         {isLoading ? (
           <LinearProgress />
@@ -225,6 +224,7 @@ function CryptoTable() {
                       sx={{
                         '&.MuiTableRow-root:hover': {
                           backgroundColor: '#0B3333',
+                          cursor: 'pointer',
                         },
                       }}
                       hover
