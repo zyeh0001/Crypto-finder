@@ -17,6 +17,7 @@ function CoinHistoryChart({ coin }) {
   const { currency, details, dispatch } = useContext(CryptoContext);
   const [days, setDays] = useState(1);
   const [alignment, setAlignment] = useState(1);
+
   const getCryptoGraph = async () => {
     const graph = await fetchCryptoGraph(coin?.id, days, currency);
     dispatch({ type: 'GET_GRAPH_DETAIL', payload: graph });

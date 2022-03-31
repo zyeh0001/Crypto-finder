@@ -6,7 +6,8 @@ import Spinner from '../components/Spinner';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CoinHistoryChart from '../components/CoinHistoryChart';
-import { currencyFormatter } from '../styles/util';
+import { currencyFormatter } from '../utils/currencyFormatter';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Container,
   Paper,
@@ -17,6 +18,9 @@ import {
   Divider,
   Chip,
   Stack,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@mui/material';
 
 function CoinDetail() {
@@ -29,6 +33,7 @@ function CoinDetail() {
     dispatch({ type: 'GET_CRYPTO_DETAIL', payload: coin });
     return coin;
   };
+
   useEffect(() => {
     dispatch({ type: 'SET_LOADING' });
     getSingleCrypto();
@@ -263,12 +268,26 @@ function CoinDetail() {
           </Stack>
 
           <Box sx={{ mt: 5 }}>
-            <Typography
-              variant='subtitle1'
-              dangerouslySetInnerHTML={{
-                __html: crypto.description?.en.split('. ')[0],
-              }}
-            ></Typography>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls='panel1a-content'
+                id='panel1a-header'
+                sx={{ backgroundColor: '#2E3333' }}
+              >
+                <Typography
+                  sx={{ fontWeight: 'bold', fontSize: 20 }}
+                >{`About ${crypto.name}`}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography
+                  variant='subtitle1'
+                  dangerouslySetInnerHTML={{
+                    __html: crypto.description?.en,
+                  }}
+                ></Typography>
+              </AccordionDetails>
+            </Accordion>
           </Box>
         </Paper>
         <Divider />

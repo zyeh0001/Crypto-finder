@@ -18,7 +18,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { fetchCryptos } from '../context/crypto/CryptoActions';
 import CryptoContext from '../context/crypto/CryptoContext';
 import { useNavigate } from 'react-router-dom';
-import { currencyFormatter } from '../styles/util';
+import { currencyFormatter } from '../utils/currencyFormatter';
 
 const headCells = [
   {
@@ -260,7 +260,6 @@ function CryptoTable() {
                           </Box>
                         </Box>
                       </TableCell>
-
                       <TableCell align='right' sx={{ fontSize: 18 }}>
                         {currencyFormatter(
                           currency,
@@ -300,7 +299,6 @@ function CryptoTable() {
             </TableBody>
           </Table>
         )}
-        {/* <TestTable /> */}
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 50]}
